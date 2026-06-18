@@ -56,18 +56,6 @@ export default function Home() {
     <div style={{ minHeight: '100vh', background: '#070708', color: '#fff', overflow: 'hidden', fontFamily: '"Rajdhani", "Barlow Condensed", "Arial Narrow", Arial, sans-serif' }}>
 
       {/* Google Fonts */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap');
-        @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
-        @keyframes flicker { 0%,100%{opacity:1} 92%{opacity:1} 93%{opacity:0.8} 94%{opacity:1} 96%{opacity:0.9} 97%{opacity:1} }
-        @keyframes pulse-red { 0%,100%{box-shadow:0 0 20px rgba(255,50,0,0.4)} 50%{box-shadow:0 0 40px rgba(255,50,0,0.8),0 0 80px rgba(255,50,0,0.3)} }
-        @keyframes slide-up { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes rotate-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-        .enter-btn:hover { transform: skewX(-4deg) scale(1.03) !important; box-shadow: 0 0 60px rgba(255,50,0,0.7), inset 0 0 30px rgba(255,80,0,0.2) !important; }
-        .enter-btn { transition: all 0.2s ease !important; }
-        .feature-card:hover { border-color: rgba(255,50,0,0.5) !important; transform: translateY(-4px) !important; background: rgba(255,50,0,0.05) !important; }
-        .feature-card { transition: all 0.3s ease !important; }
-      `}</style>
 
       {/* Particle canvas */}
       <canvas ref={canvasRef} style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }} />
