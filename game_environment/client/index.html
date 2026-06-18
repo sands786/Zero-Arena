@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discer.io - Battle Royale</title>
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+    <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+    </div>
+
+    <div id="hud">
+        <div id="health-container">
+            <div id="health-bar">
+                <div id="health-fill"></div>
+            </div>
+            <span id="health-text">100</span>
+        </div>
+
+        <div id="weapon-container">
+            <div id="weapon-name">Pistol</div>
+            <div id="ammo">
+                <span id="ammo-current">15</span> / <span id="ammo-reserve">45</span>
+            </div>
+        </div>
+
+        <div id="kill-feed"></div>
+    </div>
+
+    <div id="menu" class="visible">
+        <div id="menu-content">
+            <h1>Discer.io</h1>
+            <input type="text" id="username-input" placeholder="Enter username" maxlength="16" value="Player">
+
+            <!-- Zone Selection -->
+            <div id="zone-selection">
+                <h3 style="margin: 10px 0 5px 0; font-size: 16px;">Select Spawn Zone</h3>
+                <div id="zone-buttons">
+                    <button id="zone1-button" class="zone-button selected">
+                        Main Arena
+                        <span class="zone-desc">Large 512x512 arena</span>
+                    </button>
+                    <button id="zone2-button" class="zone-button">
+                        Forest Clearing
+                        <span class="zone-desc">Compact 256x256 zone</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="join-buttons">
+                <button id="play-button">PLAY</button>
+                <button id="spectate-button">SPECTATE</button>
+            </div>
+            <div id="controls-info">
+                <h3>Controls</h3>
+                <p>WASD - Move</p>
+                <p>Mouse - Aim</p>
+                <p>Left Click - Shoot</p>
+                <p>1/2 - Switch Weapon</p>
+                <p>F - Pick up items</p>
+                <p>R - Reload</p>
+                <p>TAB - Free Cam Mode</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="death-screen">
+        <div id="death-content">
+            <h1>YOU DIED</h1>
+            <button id="respawn-button">RESPAWN</button>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
