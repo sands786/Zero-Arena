@@ -1,71 +1,27 @@
 'use client'
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useTheme } from '../contexts/ThemeContext';
+import { useState } from 'react';
 
-/**
- * Navigation Component
- * Provides navigation between main pages
- */
 export default function Navigation() {
   const pathname = usePathname();
-  const { isDark, toggleTheme, text, bg, border } = useTheme();
-
+  const [glitch, setGlitch] = useState(false);
   const isActive = (path) => pathname === path;
 
   return (
-    <nav className={`${bg.secondary} shadow-sm ${border.primary} border-b transition-colors`}>
-      <div className="max-w-none mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <Link href="/" className={`flex items-center px-4 text-xl font-bold ${text.primary} transition-colors`}>
-              Zero Arena
-            </Link>
-            <div className="flex space-x-1 ml-8">
-              <Link
-                href="/builder"
-                className={`inline-flex items-center px-4 border-b-2 transition-colors ${
-                  isActive('/builder')
-                    ? 'border-indigo-500 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
-                    : `border-transparent ${text.secondary} hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600`
-                }`}
-              >
-                Builder
-              </Link>
-              <Link
-                href="/lessons"
-                className={`inline-flex items-center px-4 border-b-2 transition-colors ${
-                  isActive('/lessons')
-                    ? 'border-indigo-500 text-indigo-600 dark:border-indigo-400 dark:text-indigo-400'
-                    : `border-transparent ${text.secondary} hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600`
-                }`}
-              >
-                Lessons
-              </Link>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <button
-              onClick={toggleTheme}
-              className={`p-2 rounded-lg ${bg.hover} transition-colors ${text.primary}`}
-              aria-label="Toggle dark mode"
-              title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {isDark ? (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
-            </button>
-          </div>
+    <nav style={{background:'rgba(5,0,20,0.95)',borderBottom:'1px solid rgba(124,58,237,0.4)',backdropFilter:'blur(20px)',position:'sticky',top:0,zIndex:1000}}>
+      <div style={{maxWidth:1400,margin:'0 auto',padding:'0 24px',display:'flex',alignItems:'center',justifyContent:'space-between',height:64}}>
+        <Link href="/" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:12}} onClick={()=>{setGlitch(true);setTimeout(()=>setGlitch(false),400)}}>
+          <div style={{width:36,height:36,background:'linear-gradient(135deg,#7c3aed,#4f46e5)',borderRadius:8,display:'flex',alignItems:'center',justifyContent:'center',fontSize:18,boxShadow:'0 0 20px rgba(124,58,237,0.5)'}}>⚡</div>
+          <span style={{fontFamily:'"JetBrains Mono",monospace',fontSize:20,fontWeight:900,color:glitch?'#ff4444':'#fff',letterSpacing:2,textShadow:glitch?'2px 0 #0ff,-2px 0 #f0f':'0 0 20px rgba(124,58,237,0.8)'}}>ZERO<span style={{color:'#7c3aed'}}>_</span>ARENA</span>
+        </Link>
+        <div style={{display:'flex',gap:4,alignItems:'center'}}>
+          {[{href:'/builder',label:'⚔️ Arena'},{href:'/lessons',label:'📖 Codex'}].map(({href,label})=>(
+            <Link key={href} href={href} style={{padding:'8px 20px',borderRadius:8,fontFamily:'"JetBrains Mono",monospace',fontSize:13,fontWeight:700,letterSpacing:1,textDecoration:'none',color:isActive(href)?'#fff':'rgba(255,255,255,0.5)',background:isActive(href)?'linear-gradient(135deg,rgba(124,58,237,0.3),rgba(79,70,229,0.3))':'transparent',border:isActive(href)?'1px solid rgba(124,58,237,0.6)':'1px solid transparent'}}>{label}</Link>
+          ))}
+          <div style={{marginLeft:16,padding:'6px 14px',background:'linear-gradient(135deg,rgba(16,185,129,0.15),rgba(5,150,105,0.15))',border:'1px solid rgba(16,185,129,0.4)',borderRadius:20,fontSize:11,fontFamily:'"JetBrains Mono",monospace',color:'#10b981',fontWeight:700,letterSpacing:1}}>🔗 0G LIVE</div>
         </div>
       </div>
     </nav>
   );
 }
-
