@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const BACKEND = "http://localhost:8001";
+const BACKEND = "http://localhost:8002";
 
 export async function saveAgentTo0G(agentId, blocks, prompt) {
   try {
