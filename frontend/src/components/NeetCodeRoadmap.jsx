@@ -1,25 +1,16 @@
 'use client'
 
 import { useMemo, useCallback } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
 
-/**
- * NeetCodeRoadmap Component (Pure React)
- * Renders components in a simple responsive grid with progress bars
- */
 export default function NeetCodeRoadmap({ components, lessons, progress, onComponentSelect, onStarredClick, starredCount = 0 }) {
-  const theme = useTheme();
-  // Chunk to rows of 3 (grid)
   const organizedComponents = useMemo(() => {
-    const perRow = 2;
     const rows = [];
-    for (let i = 0; i < components.length; i += perRow) {
-      rows.push(components.slice(i, i + perRow));
+    for (let i = 0; i < components.length; i += 2) {
+      rows.push(components.slice(i, i + 2));
     }
     return rows;
   }, [components]);
 
-  // Calculate per-component progress
   const getComponentProgress = useCallback((component) => {
     const componentLessons = lessons.filter(l => component.lessonIds.includes(l.id));
     if (componentLessons.length === 0) return 0;
@@ -28,52 +19,103 @@ export default function NeetCodeRoadmap({ components, lessons, progress, onCompo
   }, [lessons, progress]);
 
   return (
-    <div className={`w-full h-full ${theme.bg.primary} p-6 overflow-auto flex items-center`}>
-      <div className="max-w-4xl mx-auto w-full">
-        {/* Starred Button */}
-        {onStarredClick && (
-          <div className="mb-6 flex justify-start relative">
-            <button
-              onClick={onStarredClick}
-              className={`${theme.components.card.bg} rounded-xl border-2 p-2 ${theme.text.primary} transition-all hover:scale-105 flex items-center justify-center ${theme.components.card.border} absolute`}
-              style={{ left: '13px', bottom: '5px' }}
-            >
-              <div className={`font-bold text-sm ${theme.text.primary} flex items-center gap-2`}>
-                <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                Starred
-              </div>
-            </button>
+    <div style={{ width:'100%', height:'100%', background:'#070708', padding:'32px', overflowY:'auto', fontFamily:'"Barlow Condensed", "Rajdhani", sans-serif' }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap');
+        .codex-card { transition: all 0.2s ease; cursor: pointer; }
+        .codex-card:hover { transform: translateY(-4px) !important; border-color: rgba(255,50,0,0.6) !important; background: rgba(255,30,0,0.06) !important; box-shadow: 0 8px 32px rgba(255,50,0,0.15) !important; }
+        .star-btn:hover { border-color: rgba(255,180,0,0.6) !important; background: rgba(255,180,0,0.08) !important; }
+      `}</style>
+
+      <div style={{ maxWidth: 960, margin: '0 auto' }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 40, borderBottom: '1px solid rgba(255,50,0,0.2)', paddingBottom: 24 }}>
+          <div style={{ fontSize: 11, color: '#ff3200', letterSpacing: 4, marginBottom: 8, fontWeight: 700 }}>ZERO ARENA</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <h1 style={{ fontSize: 48, fontWeight: 900, color: '#fff', letterSpacing: 2, margin: 0 }}>
+              AGENT <span style={{ color: '#ff6b00' }}>CODEX</span>
+            </h1>
+            {onStarredClick && (
+              <button className="star-btn" onClick={onStarredClick} style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '10px 20px',
+                background: 'rgba(255,180,0,0.06)',
+                border: '1px solid rgba(255,180,0,0.3)',
+                color: '#fbbf24',
+                fontFamily: '"Barlow Condensed", sans-serif',
+                fontSize: 14, fontWeight: 700, letterSpacing: 2,
+                cursor: 'pointer',
+                clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
+              }}>
+                ★ STARRED {starredCount > 0 && `(${starredCount})`}
+              </button>
+            )}
           </div>
-        )}
-        
+          <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 14, marginTop: 8, letterSpacing: 1 }}>
+            MASTER AI AGENT ARCHITECTURE — MISSION BY MISSION
+          </p>
+        </div>
+
+        {/* Cards Grid */}
         {organizedComponents.map((row, rowIdx) => (
-          <div key={rowIdx} className="flex flex-wrap justify-center gap-8 mb-10">
-            {row.map((component) => {
+          <div key={rowIdx} style={{ display: 'flex', gap: 16, marginBottom: 16, justifyContent: 'center' }}>
+            {row.map((component, colIdx) => {
               const progressPercent = Math.round(getComponentProgress(component));
+              const isComplete = progressPercent === 100;
+              const missionNum = rowIdx * 2 + colIdx + 1;
+
               return (
-                <button
-                  key={component.id}
-                  onClick={() => onComponentSelect(component)}
-                  className={`${theme.components.card.bg} rounded-xl border-2 px-8 py-6 ${theme.text.primary} transition-all hover:scale-105 flex flex-col items-center justify-center ${theme.components.card.border} text-center`}
+                <button key={component.id} className="codex-card" onClick={() => onComponentSelect(component)}
                   style={{
-                    width: '420px',
-                    height: '100px',
-                  }}
-                >
-                  <div className={`font-bold text-lg ${theme.text.primary} mb-3`}>
+                    flex: 1, maxWidth: 460,
+                    padding: '28px 32px',
+                    background: 'rgba(255,255,255,0.02)',
+                    border: `1px solid ${isComplete ? 'rgba(74,222,128,0.4)' : 'rgba(255,255,255,0.08)'}`,
+                    position: 'relative', overflow: 'hidden',
+                    textAlign: 'left', cursor: 'pointer',
+                    clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))',
+                  }}>
+
+                  {/* Corner accent */}
+                  <div style={{ position: 'absolute', top: 0, right: 0, width: 12, height: 12, background: isComplete ? '#4ade80' : '#ff3200', opacity: 0.6 }} />
+
+                  {/* Mission number */}
+                  <div style={{ position: 'absolute', top: 16, right: 20, fontSize: 48, fontWeight: 900, color: 'rgba(255,50,0,0.06)', lineHeight: 1, fontFamily: '"Barlow Condensed", sans-serif' }}>
+                    {String(missionNum).padStart(2, '0')}
+                  </div>
+
+                  {/* Status badge */}
+                  <div style={{ marginBottom: 12 }}>
+                    {isComplete ? (
+                      <span style={{ fontSize: 10, letterSpacing: 3, color: '#4ade80', fontWeight: 700 }}>✓ COMPLETE</span>
+                    ) : progressPercent > 0 ? (
+                      <span style={{ fontSize: 10, letterSpacing: 3, color: '#ff6b00', fontWeight: 700 }}>▶ IN PROGRESS</span>
+                    ) : (
+                      <span style={{ fontSize: 10, letterSpacing: 3, color: 'rgba(255,255,255,0.2)', fontWeight: 700 }}>◈ LOCKED</span>
+                    )}
+                  </div>
+
+                  {/* Title */}
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: 1, marginBottom: 20, lineHeight: 1.2, fontFamily: '"Barlow Condensed", sans-serif', textTransform: 'uppercase' }}>
                     {component.name}
                   </div>
-                  <div className={`w-full ${theme.components.progressBar.bg} rounded-full h-4 border ${theme.components.progressBar.border} overflow-hidden relative`}>
-                    <div
-                      className={`h-full transition-all duration-500 ease-in-out ${
-                        progressPercent === 100
-                          ? 'bg-gradient-to-r from-green-400 to-green-500'
-                          : 'bg-gradient-to-r from-blue-400 to-blue-500'
-                      }`}
-                      style={{ width: `${progressPercent}%`, transition: 'width 500ms ease-in-out' }}
-                    />
+
+                  {/* Progress bar */}
+                  <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', position: 'relative' }}>
+                    <div style={{
+                      height: '100%',
+                      width: `${progressPercent}%`,
+                      background: isComplete ? 'linear-gradient(90deg, #4ade80, #22c55e)' : 'linear-gradient(90deg, #ff3200, #ff6b00)',
+                      transition: 'width 500ms ease',
+                      boxShadow: isComplete ? '0 0 8px rgba(74,222,128,0.5)' : '0 0 8px rgba(255,50,0,0.5)',
+                    }} />
+                  </div>
+
+                  {/* Progress text */}
+                  <div style={{ marginTop: 8, fontSize: 11, color: 'rgba(255,255,255,0.25)', letterSpacing: 2, display: 'flex', justifyContent: 'space-between' }}>
+                    <span>{component.lessonIds.length} MISSIONS</span>
+                    <span style={{ color: isComplete ? '#4ade80' : progressPercent > 0 ? '#ff6b00' : 'rgba(255,255,255,0.2)' }}>{progressPercent}%</span>
                   </div>
                 </button>
               );
