@@ -892,7 +892,7 @@ export default function LessonPage() {
 }
 
 // Backend port - update if your backend runs on a different port
-const BACKEND_URL = 'http://localhost:8001';
+const BACKEND_URL = 'http://zero-arena-1.onrender.com';
 
 // Available models (sorted by speed/cost, fastest first)
 const MODELS = [
