@@ -1,3 +1,8 @@
 {
-  "public": true
+  "public": true,
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "env": {
+    "NEXT_PUBLIC_BACKEND_URL": "https://zero-arena-1.onrender.com"
+  }
 }
