@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const BACKEND = "http://localhost:8002";
+const BACKEND = "http://zero-arena.onrender.com";
 
 export async function saveAgentTo0G(agentId, blocks, prompt) {
   try {
