@@ -809,7 +809,7 @@ export default function LessonPage() {
       { text: 'Review the lesson content and understand the core concepts' },
       { text: 'Use the builder on the right to create your agent following the lesson guidelines' },
       { text: 'Test your agent in the game preview and iterate on your design' },
-      { text: 'Ask discer below if you need help or have questions' },
+      { text: 'Ask ZERO AI below if you need help or have questions' },
     ],
   };
 
@@ -1019,9 +1019,9 @@ function LessonBuilder({ lesson, config, isStarred, onToggleStar }) {
         {
           id: 1,
           sender: 'teacher',
-          name: 'discer',
+          name: 'ZERO',
           avatar: '🤖',
-          message: `Hi! I'm discer, I can help you if you have trouble! Do you need a hint?`,
+          message: `Hi! I'm ZERO AI, I can help you if you have trouble! Do you need a hint?`,
           timestamp: 'Just now',
         },
       ];
@@ -1973,7 +1973,7 @@ function LessonBuilder({ lesson, config, isStarred, onToggleStar }) {
       const teacherResponse = {
         id: Date.now() + 1,
         sender: 'teacher',
-        name: 'discer',
+        name: 'ZERO',
         avatar: '🤖',
         message: data.response,
         timestamp: 'Just now',
@@ -1984,7 +1984,7 @@ function LessonBuilder({ lesson, config, isStarred, onToggleStar }) {
       const errorResponse = {
         id: Date.now() + 1,
         sender: 'teacher',
-        name: 'discer',
+        name: 'ZERO',
         avatar: '🤖',
         message: 'Sorry, I encountered an error. Please try again later.',
         timestamp: 'Just now',
@@ -2170,7 +2170,7 @@ function LessonBuilder({ lesson, config, isStarred, onToggleStar }) {
                     </div>
                     <div className="text-left">
                       <h3 className={`text-sm font-semibold ${theme.text.primary}`}>
-                        Ask discer for help
+                        Ask ZERO AI for help
                       </h3>
                       <p className={`text-xs ${theme.text.tertiary}`}>
                         {isChatOpen ? 'Click to minimize' : 'Click to open chat'}
