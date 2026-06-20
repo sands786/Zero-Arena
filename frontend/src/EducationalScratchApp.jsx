@@ -395,7 +395,7 @@ function EducationalScratchApp() {
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-sm font-bold text-gray-700">Live Game Environment</h3>
             <a
-              href="http://localhost:3000"
+              href="http://zero-arena-game2.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition"
@@ -406,7 +406,7 @@ function EducationalScratchApp() {
           </div>
           <div className="relative w-full aspect-square bg-gray-900 rounded-lg border-2 border-gray-300 overflow-hidden shadow-lg">
             <iframe
-              src="http://localhost:3000"
+              src="http://zero-arena-game2.onrender.com"
               className="w-full h-full border-0"
               title="Game Environment"
               allow="fullscreen"
