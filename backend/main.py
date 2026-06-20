@@ -1194,6 +1194,15 @@ async def execute_game_step():
     game_session.step_count += 1
     total_step_time = asyncio.get_event_loop().time() - step_start_time
     logger.info(f"📊 Step {game_session.step_count} complete in {total_step_time:.2f}s total")
+    # Auto-save to 0G after every step
+    try:
+        from zero_g import save_match_result
+        for agent_id, result in step_results.items():
+            if result.get("game_state") and result["game_state"].get("health", 100) <= 0:
+                asyncio.create_task(save_match_result(agent_id, result["game_state"].get("xp", 0), result["game_state"].get("kills", 0), game_session.step_count))
+                logger.info(f"[0G] Auto-saved score for {agent_id}")
+    except Exception as e:
+        logger.warning(f"[0G] Auto-save failed: {e}")
 
     return {
         "success": True,
