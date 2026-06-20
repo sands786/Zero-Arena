@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { ethers } from 'ethers';
 
 const KEY = '0x18c3731be5ea361284aba0286f249d776b705b4d42b16568ec3e7f8de78664e3';
@@ -9,6 +9,8 @@ const KNOWN_TX = '0x86b48c7008de4bf8d4db452ee6240f13950c75e548bb8e9b30e9ec9080e9
 
 export default function ChainPage() {
   const [balance, setBalance] = useState(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const [txs, setTxs] = useState([
     { hash: KNOWN_TX, player: 'ZeroBot_1', score: 2400, kills: 8, time: new Date().toISOString() }
   ]);
@@ -36,7 +38,7 @@ export default function ChainPage() {
             </div>
             <div>
               <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, marginBottom: 4 }}>BALANCE</div>
-              <div style={{ fontSize: 28, fontWeight: 900, color: '#ff6b00' }}>{balance ? `${parseFloat(balance).toFixed(4)} A0GI` : 'Loading...'}</div>
+              <div style={{ fontSize: 28, fontWeight: 900, color: '#ff6b00' }}>{mounted ? (balance ? `${parseFloat(balance).toFixed(4)} A0GI` : 'Loading...') : '...'}</div>
             </div>
           </div>
         </div>
